@@ -21,10 +21,20 @@
 /* Macro Definition ----------------------------------------------------------*/
 /* Variables -----------------------------------------------------------------*/
 /* Function Declaration ------------------------------------------------------*/
-void printFormattedJson(const QJsonObject   &jsonObject,   QJsonDocument::JsonFormat jsonFormat = QJsonDocument::Indented);
-void printFormattedJson(const QJsonDocument &jsonDocument, QJsonDocument::JsonFormat jsonFormat = QJsonDocument::Indented);
-void printFormattedJson(const QString       &jsonString,   QJsonDocument::JsonFormat jsonFormat = QJsonDocument::Indented);
+inline void printFormattedJson(const QJsonObject   &jsonObject,   QJsonDocument::JsonFormat jsonFormat = QJsonDocument::Indented)
+{
+    qDebug() << qPrintable(QString(QJsonDocument(jsonObject).toJson(jsonFormat)));
+}
 
+inline void printFormattedJson(const QJsonDocument &jsonDocument, QJsonDocument::JsonFormat jsonFormat = QJsonDocument::Indented)
+{
+    qDebug() << qPrintable(QString(jsonDocument.toJson(jsonFormat)));
+}
+
+inline void printFormattedJson(const QString &jsonString, QJsonDocument::JsonFormat jsonFormat = QJsonDocument::Indented)
+{
+    qDebug() << qPrintable(QString(QJsonDocument::fromJson(jsonString.toUtf8()).toJson(jsonFormat)));
+}
 #endif // JSONHANDLE_H
 
 /**************** (C) COPYRIGHT 2019 Junxin Zheng ******** END OF FILE ********/

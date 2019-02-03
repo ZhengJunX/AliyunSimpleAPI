@@ -20,10 +20,21 @@
 
 /* Variables -----------------------------------------------------------------*/
 /* Function Declaration ------------------------------------------------------*/
-qint64  getTimestamp(const QString &dateTime, const QString &format);
-QString getTimestamp(qint64 timestamp = QDateTime::currentDateTime().toMSecsSinceEpoch());
-QString getDateTime(qint64 timestamp = QDateTime::currentDateTime().toMSecsSinceEpoch(),
-                    const QString &format = FORMAT_ISO_8601);
+inline qint64  getTimestamp(const QString &dateTime, const QString &format)
+{
+    return QDateTime::fromString(dateTime, format).toMSecsSinceEpoch();
+}
+
+inline QString getTimestamp(qint64 timestamp = QDateTime::currentDateTime().toMSecsSinceEpoch())
+{
+    return QString::number(timestamp);
+}
+
+inline QString getDateTime(qint64 timestamp = QDateTime::currentDateTime().toMSecsSinceEpoch(),
+                           const QString &format = FORMAT_ISO_8601)
+{
+    return QDateTime::fromMSecsSinceEpoch(timestamp).toString(format);
+}
 
 #endif // DATEUTIL_H
 

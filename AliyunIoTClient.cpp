@@ -141,7 +141,7 @@ void AliyunIoTClient::setHeader(const QString &postData, const QString &url)
     NetworkRequest.setRawHeader(X_CA_NONCE,               getUuid().toUtf8());
     NetworkRequest.setRawHeader(X_CA_SIGNATURE_HEADERS,   X_CA_SIGNTURE_STRING);
     NetworkRequest.setRawHeader(HTTP_HEADER_ACCEPT,       CONTENT_TYPE_JSON);
-    NetworkRequest.setRawHeader(HTTP_HEADER_CONTENT_MD5,  get_md5_base64_str(postData));
+    NetworkRequest.setRawHeader(HTTP_HEADER_CONTENT_MD5,  getHash(QCryptographicHash::Md5, postData).toBase64());
     NetworkRequest.setRawHeader(X_CA_KEY,                 API_KEY.toUtf8());
     NetworkRequest.setRawHeader(X_CA_SIGNATURE,           getSignature(url).toUtf8());
     NetworkRequest.setRawHeader(HTTP_HEADER_CONTENT_TYPE, CONTENT_TYPE_JSON);
@@ -204,7 +204,7 @@ QString AliyunIoTClient::getSignature(const QString &url)
     qDebug() << qPrintable(StringSign);
 #endif
 
-    return get_sha256_base64_str(StringSign, API_SECRET);
+    return getHash(QCryptographicHash::Sha256, StringSign, API_SECRET).toBase64();
 }
 
 

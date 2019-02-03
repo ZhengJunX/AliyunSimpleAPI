@@ -18,9 +18,8 @@
 #include <QtNetwork>
 #include <QTimer>
 #include <QSslConfiguration>
-#include "DateUtil.h"
-#include "UUIDUtil.h"
 #include "Constant.h"
+#include "DateUtil.h"
 #include "JsonHandle.h"
 #include "Authorization.h"
 

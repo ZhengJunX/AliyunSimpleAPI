@@ -145,7 +145,7 @@ QString AliyunMqttClient::getUserName(const QString &productKey, const QString &
   *****************************************************************************/
 QString AliyunMqttClient::getUserPassword(const QString &productKey, const QString &deviceName, const QString &deviceSecret, const QString &Random)
 {
-    return get_sha1_hex("clientId" + Random + "deviceName" + deviceName + "productKey" + productKey, deviceSecret);
+    return getHash(QCryptographicHash::Sha1, "clientId" + Random + "deviceName" + deviceName + "productKey" + productKey, deviceSecret).toHex();
 }
 
 

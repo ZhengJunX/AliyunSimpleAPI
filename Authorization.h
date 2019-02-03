@@ -13,17 +13,33 @@
 #define AUTHORIZATION_H
 
 /* Includes ------------------------------------------------------------------*/
+#include <QUuid>
 #include <QCryptographicHash>
 #include <QMessageAuthenticationCode>
-#include <QString>
-#include <QDebug>
 
 /* Macro Definition ----------------------------------------------------------*/
 /* Variables -----------------------------------------------------------------*/
-/* Function Declaration ------------------------------------------------------*/
-QByteArray get_md5_base64_str(const QString &content);
-QByteArray get_sha256_base64_str(const QString &content, const QString &secret);
-QByteArray get_sha1_hex(const QString &content, const QString &secret);
+/* Function ------------------------------------------------------------------*/
+/******************************************************************************/
+/*                              Hash Algorithm                                */
+/******************************************************************************/
+inline QByteArray getHash(QCryptographicHash::Algorithm method, const QString &content)
+{
+    return QCryptographicHash::hash(content.toUtf8(), method);
+}
+
+inline QByteArray getHash(QCryptographicHash::Algorithm method, const QString &content, const QString &secret)
+{
+    return QMessageAuthenticationCode::hash(content.toUtf8(), secret.toUtf8(), method);
+}
+
+/******************************************************************************/
+/*                        Universally Unique Identifier                       */
+/******************************************************************************/
+inline QString getUuid()
+{
+    return QUuid::createUuid().toString().replace('{', '}').remove('}');
+}
 
 #endif // AUTHORIZATION_H
 
